@@ -1,4 +1,4 @@
-from ctypes import cdll, c_double, c_long, c_int, byref, addressof, cast, POINTER
+from ctypes import cdll, c_double, c_long, c_int, c_short, cast, POINTER
 from pandas import DataFrame
 from os.path import join, exists
 from time import sleep
@@ -175,8 +175,14 @@ class Spectrometer(object):
         setter.restype = c_long
         setter_success = setter(self.cSignalAnalysis, self.cAnalysisEnable)
         self.check_error(setter_success, 'set')
+        setter = self.lib.SetWideMode
+        setter.restype = c_short
+        # set the LSA in 'precise' mode, this may vary between spectrometers
+        setter_success = setter(1)
+        self.check_error(setter_success, 'set')
+
         results = {}
-        parts = [{'x':'X', 'y':'Y'},
+        parts = [{'wavelength':'X', 'intensity':'Y'},
                  {'size':'ItemSize', 'count':'ItemCount', 'address':''}]
         for axis in parts[0]:
             results[axis] = {}
@@ -193,9 +199,9 @@ class Spectrometer(object):
             access_size = DATATYPE_MAP[results[axis]['size']]*results[axis]['count']
             memory_values[axis] = cast(results[axis]['address'],
                                        POINTER(access_size))
-        for i in range(0, results['x']['count']):
-            spectrum.append({'x': memory_values['x'].contents[i],
-                             'y': memory_values['y'].contents[i]})
+        for i in range(0, results['wavelength']['count']):
+            spectrum.append({'wavelength': memory_values['wavelength'].contents[i],
+                             'intensity': memory_values['intensity'].contents[i]})
         spectrum = DataFrame(spectrum)
         return spectrum
 
