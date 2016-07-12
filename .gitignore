@@ -1,4 +1,7 @@
 # pycharm generated
 .idea
-
+build
+dist
+pyHighFinesse.egg-info
 lsa/__pycache__
+*.pyc
