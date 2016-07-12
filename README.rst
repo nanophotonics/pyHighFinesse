@@ -1,7 +1,7 @@
 pyHighFinesse
 -------------
 
-.. image:: matplotlib_graph.png
+.. image:: https://raw.githubusercontent.com/CatherineH/pyHighFinesse/master/example/matplotlib_graph.png
     :align: center
     :alt: spectrum data plotted in Matplotlib
 
@@ -16,7 +16,8 @@ First, install the WLM drivers and LSA software on your computer. These can be o
 
 Then, clone and install this repository
 
-.. code
-   git clone https://github.com/CatherineH/pyHighFinesse
-   cd pyHighFinesse
-   python setup.py install
+.. code:: bash
+
+  git clone https://github.com/CatherineH/pyHighFinesse
+  cd pyHighFinesse
+  python setup.py install
