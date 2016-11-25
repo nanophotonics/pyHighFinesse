@@ -142,9 +142,8 @@ class Wavemeter(object):
         states = {0: 'StopAll', 1: 'StartMeasurement'}
         setter = self.lib.Operation
         setter.restype = c_long
-#        response = setter(getattr(self, 'cCtrl'+states[new_val]))
+        response = setter(getattr(self, 'cCtrl'+states[new_val]))
         print states[new_val]        
-        response = setter('cCtrl'+states[new_val])
         self.check_error(response, error_type='set')
 
 #    @property
@@ -377,17 +376,10 @@ if __name__ == "__main__":
     wlm = Wavemeter()
     wlm.version
     wlm.temperature
-    
-#    wlm.active
-#    wlm.active_setter(1)    
-#    wlm.active
-#    wlm.wavelength
-#    wlm.active_setter(0)
-#    wlm.active
-    
+       
     wlm.active
-    wlm.active(1)    
+    wlm.active = 1
     wlm.active
     wlm.wavelength
-    wlm.active(0)
+    wlm.active = 0
     wlm.active
