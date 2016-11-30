@@ -8,6 +8,7 @@ from ctypes import cdll, c_double, c_long, c_int, c_short, cast, POINTER
 from os.path import join, exists
 from time import sleep
 from pandas import DataFrame
+import time
 
 
 SYSTEM_FOLDERNAME = "C:\\Program Files (x86)\\HighFinesse\\Wavelength Meter WS6 3194\\Projects\\64"
@@ -23,6 +24,8 @@ class WavemeterException(Exception):
     """
     An Exception for repeating WLM errors
     """
+    def __init__(self, error):
+        super(WavemeterException, self).__init__(error)
     pass
 
 
@@ -46,6 +49,8 @@ class Wavemeter(object):
                 pass
             connection = self.lib.Instantiate()
             self.check_error(connection, 'set')
+            # wait for the wavemeter to finish initialising
+            time.sleep(1) # seconds
         else:
             raise OSError("wlmData.dll not found in "+SYSTEM_FOLDERNAME)
 
