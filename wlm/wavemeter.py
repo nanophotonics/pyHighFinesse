@@ -178,7 +178,6 @@ class Wavemeter(object):
         values = []
         
         if self.verbosity:
-            print 'Version: '
             for i in range(0, 4):
                 part = getter(i)
                 self.check_error(part, error_type='read')
